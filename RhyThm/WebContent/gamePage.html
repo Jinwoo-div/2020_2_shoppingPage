@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <style>
+        #wrapper {
+            min-width: 500px;
+            border-radius: 20px;
+            border: solid 3px;
+            border-color: plum;
+                z-index: 0;
+        }
+            #game {
+                float: left;
+                width: 70%;
+                height: inherit;
+                z-index: 0;
+            }
+            #result {
+                float: right;
+                width: 29%;
+                height: inherit;
+                z-index: 0;
+            }
+            input[type=button] {
+                position: fixed;
+                left: 500px;
+                bottom: 100px;
+                z-index: 1;
+            }
+        </style>
+        <script>
+            window.onload = init;
+            window.onresize = resiz;
+            var gam;
+            var resul;
+
+            function resiz() {
+                document.getElementById("wrapper").style.height= window.innerHeight-50 + 'px';
+                document.getElementById("pause").style.position = fixed;
+                document.getElementById("pause").style.zIndex = 1;
+                document.getElementById("pause").style.left = window.innerWidth + 'px';
+                document.getElementById("pause").style.bottom = window.innerHeight + 'px';
+                document.getElementById("pause").style.color = 'red';
+                
+            }
+            function init() {
+                gam = document.getElementById("game");
+                resul = document.getElementById("result");
+                resiz();
+                var game = gam.getContext("2d");
+                var result = resul.getContext("2d");
+                game.fillStyle = "black";
+                result.fillStyle = "yellow";
+                game.fillRect(0, 0, gam.width, window.innerHeight);
+                result.fillRect(0, 0, resul.width, window.innerHeight);
+            }
+        </script>
+    </head>
+    <body>
+        <div id="wrapper">
+        <canvas id="game" style="border: solid 1px;"></canvas>
+        <canvas id="result" style="border: solid 1px;"></canvas>
+        <input type="button" id="pause" value="일시정지"></input>
+        </div>
+    </body>
+</html>
