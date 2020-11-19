@@ -2,13 +2,13 @@
 <html>
     <head>
         <style>
-        #wrapper {
-            min-width: 500px;
-            border-radius: 20px;
-            border: solid 3px;
-            border-color: plum;
+            #wrapper {
+                min-width: 500px;
+                border-radius: 20px;
+                border: solid 3px;
+                border-color: plum;
                 z-index: 0;
-        }
+            }
             #game {
                 float: left;
                 width: 70%;
@@ -23,9 +23,11 @@
             }
             input[type=button] {
                 position: fixed;
-                left: 500px;
-                bottom: 100px;
                 z-index: 1;
+                background-color: mediumpurple;
+                color: white;
+                border-radius: 20px;
+                border: solid 1px purple;
             }
         </style>
         <script>
@@ -33,25 +35,48 @@
             window.onresize = resiz;
             var gam;
             var resul;
+            var game;
+            var result;
 
             function resiz() {
-                document.getElementById("wrapper").style.height= window.innerHeight-50 + 'px';
-                document.getElementById("pause").style.position = fixed;
-                document.getElementById("pause").style.zIndex = 1;
-                document.getElementById("pause").style.left = window.innerWidth + 'px';
-                document.getElementById("pause").style.bottom = window.innerHeight + 'px';
-                document.getElementById("pause").style.color = 'red';
-                
+                document.getElementById("wrapper").style.height= window.innerHeight- 50 + 'px';
+                document.getElementById("pause").style.left = window.innerWidth- 130 + 'px';
+                document.getElementById("pause").style.top = window.innerHeight - 80 + 'px';
+                repaint();
+            }
+            function repaint() {
+                var reWidth;
+                var reHeight;
+                if (gam.width%2 == 1) {
+                    rewidth = gam.width+1;
+                }
+                else {
+                    reWidth = gam.width;
+                }
+                if (gam.height%2 == 1) {
+                    reHeight = gam.height-1;
+                }
+                else {
+                    reHeight = gam.width;
+                }
+                game.beginPath();
+                game.lineWidth = 1;
+                game.moveTo(10, 6);
+                game.lineTo(reWidth - 10, 6);
+                game.lineTo(reWidth - 10, reHeight - 156);
+                game.lineTo(10, reHeight - 156);
+                game.lineTo(10, 6); 
+                game.strokeStyle = 'red';
+                // game.rect(10, 7, gam.width - 20, gam.height - 15);
+                game.stroke();
             }
             function init() {
                 gam = document.getElementById("game");
                 resul = document.getElementById("result");
+                game = gam.getContext("2d");
+                result = resul.getContext("2d");
                 resiz();
-                var game = gam.getContext("2d");
-                var result = resul.getContext("2d");
-                game.fillStyle = "black";
                 result.fillStyle = "yellow";
-                game.fillRect(0, 0, gam.width, window.innerHeight);
                 result.fillRect(0, 0, resul.width, window.innerHeight);
             }
         </script>
