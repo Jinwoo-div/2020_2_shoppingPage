@@ -37,6 +37,9 @@
             var resul;
             var game;
             var result;
+            var key = 3;
+            var curGameWidth;
+            var curGameHeight;
 
             function resiz() {
                 document.getElementById("wrapper").style.height= window.innerHeight- 50 + 'px';
@@ -45,6 +48,12 @@
                 repaint();
             }
             function repaint() {
+                paintBorder();
+            }
+            function paintnode() {
+
+            }
+            function paintBorder() {
                 var reWidth;
                 var reHeight;
                 if (gam.width%2 == 1) {
@@ -67,6 +76,8 @@
                 game.lineTo(10, reHeight - 156);
                 game.lineTo(10, 6); 
                 game.strokeStyle = 'red';
+                curGameHeight = reHeight - 12;
+                curGameWidth = reWidth - 20;
                 // game.rect(10, 7, gam.width - 20, gam.height - 15);
                 game.stroke();
             }
@@ -78,14 +89,18 @@
                 resiz();
                 result.fillStyle = "yellow";
                 result.fillRect(0, 0, resul.width, window.innerHeight);
+                for (var i = 1; i < key + 1; i++) { 
+                    var node = document.createElement("canvas");
+                    node.id = "node" + i;
+                    document.getElementById("wrapper").appendChild(node);//node 떨어트릴 canvas key 개수만큼생성
+                }
             }
         </script>
     </head>
     <body>
-        <div id="wrapper">
-        <canvas id="game" style="border: solid 1px;"></canvas>
-        <canvas id="result" style="border: solid 1px;"></canvas>
-        <input type="button" id="pause" value="일시정지"></input>
+        <div id="wrapper"><canvas id="game" style="border: solid 1px;"></canvas>
+            <canvas id="result" style="border: solid 1px;"></canvas>
+            <input type="button" id="pause" value="일시정지"></input>
         </div>
     </body>
 </html>
