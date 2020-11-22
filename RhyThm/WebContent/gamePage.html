@@ -8,6 +8,7 @@
                 border: solid 3px;
                 border-color: plum;
                 z-index: 0;
+                background-color: white;
             }
             #game {
                 float: left;
@@ -37,9 +38,10 @@
             var resul;
             var game;
             var result;
-            var key = 3;
+            var key = 6;
             var curGameWidth;
             var curGameHeight;
+            var nodeImg;
 
             function resiz() {
                 document.getElementById("wrapper").style.height= window.innerHeight- 50 + 'px';
@@ -50,8 +52,20 @@
             function repaint() {
                 paintBorder();
             }
-            function paintnode() {
-
+            function paintNode(i, y) {
+                setTimeout(function() {
+                    var name = "bufNode" + i.toString();
+                    var tmpNode = document.getElementById(name).getContext("2d");
+                    tmpNode.clearRect(0, 0, gam.width, gam.height);
+                    tmpNode.drawImage(nodeImg, (curGameWidth/(key*2 - 1))*(2*(i) - 1), y, nodeImg.width/20, nodeImg.height/20);
+                    var oriName = "node" + i.toString();
+                    document.getElementById(oriName).getContext("2d").clearRect(0, 0, gam.width, gam.height);
+                    document.getElementById(oriName).getContext("2d").drawImage(document.getElementById(name), nodeImg.width/20, nodeImg.height/20);
+                    // tmpNode.beginPath();
+                    // tmpNode.arc((curGameWidth/(key*2 - 1))*(2*i - 1), y, 5, 0, Math.PI*2, true);
+                    // tmpNode.fillStyle = "blue";
+                    // tmpNode.fill();
+                },y*5);
             }
             function paintBorder() {
                 var reWidth;
@@ -80,20 +94,66 @@
                 curGameWidth = reWidth - 20;
                 // game.rect(10, 7, gam.width - 20, gam.height - 15);
                 game.stroke();
+                // for (var i = 1; i < key + 1; i++) {
+                //     var name = "node" + i.toString();
+                //     var tmpNode = document.getElementById(name).getContext("2d");
+                //     tmpNode.beginPath();
+                // }
+
             }
             function init() {
+                nodeImg = new Image();
+                nodeImg.src = "node.jpg";
+                document.getElementById("pause").onclick = function() {
+                    
+                    
+                for(var y = curGameHeight; y > 0; y--) {
+                paintNode(1 ,y);
+                paintNode(2 ,y);
+                paintNode(3 ,y);
+                paintNode(4 ,y);
+                paintNode(5 ,y);
+                paintNode(6 ,y);
+                }
+
+                setTimeout(function() {
+                    for(var y = curGameHeight; y > 0; y--) {
+                paintNode(1 ,y);
+                paintNode(2 ,y);
+                paintNode(3 ,y);
+                paintNode(4 ,y);
+                paintNode(5 ,y);
+                paintNode(6 ,y);
+                }
+            }, 1000);
+        }
                 gam = document.getElementById("game");
                 resul = document.getElementById("result");
                 game = gam.getContext("2d");
                 result = resul.getContext("2d");
-                resiz();
                 result.fillStyle = "yellow";
                 result.fillRect(0, 0, resul.width, window.innerHeight);
                 for (var i = 1; i < key + 1; i++) { 
                     var node = document.createElement("canvas");
+                    node.style.width = "70%";
+                    node.style.height = "inherit";
+                    node.style.border = "solid red " + i + "px";
+                    node.style.position = "absolute";
                     node.id = "node" + i;
-                    document.getElementById("wrapper").appendChild(node);//node 떨어트릴 canvas key 개수만큼생성
+                    document.getElementById("wrapper").insertBefore(node, document.getElementById("game"));//node 떨어트릴 canvas key 개수만큼생성
                 }
+                for (var i = 1; i < key + 1; i++) { 
+                    var node = document.createElement("canvas");
+                    node.style.width = "70%";
+                    node.style.height = "inherit";
+                    node.style.border = "solid black " + i + "px";
+                    node.style.position = "absolute";
+                    node.style.zIndex = "-1";
+                    node.id = "bufNode" + i;
+                    document.getElementById("wrapper").insertBefore(node, document.getElementById("game"));//node 떨어트릴 canvas key 개수만큼생성
+                }
+                
+                resiz();
             }
         </script>
     </head>
