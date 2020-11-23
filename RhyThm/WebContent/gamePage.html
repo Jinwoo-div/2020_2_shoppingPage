@@ -42,6 +42,7 @@
             var curGameWidth;
             var curGameHeight;
             var nodeImg;
+            var buf;
 
             function resiz() {
                 document.getElementById("wrapper").style.height= window.innerHeight- 50 + 'px';
@@ -54,13 +55,10 @@
             }
             function paintNode(i, y) {
                 setTimeout(function() {
-                    var name = "bufNode" + i.toString();
+                    var name = "node" + i.toString();
                     var tmpNode = document.getElementById(name).getContext("2d");
                     tmpNode.clearRect(0, 0, gam.width, gam.height);
-                    tmpNode.drawImage(nodeImg, (curGameWidth/(key*2 - 1))*(2*(i) - 1), y, nodeImg.width/20, nodeImg.height/20);
-                    var oriName = "node" + i.toString();
-                    document.getElementById(oriName).getContext("2d").clearRect(0, 0, gam.width, gam.height);
-                    document.getElementById(oriName).getContext("2d").drawImage(document.getElementById(name), nodeImg.width/20, nodeImg.height/20);
+                    tmpNode.drawImage(buf, 0, 0);
                     // tmpNode.beginPath();
                     // tmpNode.arc((curGameWidth/(key*2 - 1))*(2*i - 1), y, 5, 0, Math.PI*2, true);
                     // tmpNode.fillStyle = "blue";
@@ -102,31 +100,26 @@
 
             }
             function init() {
-                nodeImg = new Image();
-                nodeImg.src = "node.jpg";
                 document.getElementById("pause").onclick = function() {
-                    
-                    
-                for(var y = curGameHeight; y > 0; y--) {
-                paintNode(1 ,y);
-                paintNode(2 ,y);
-                paintNode(3 ,y);
-                paintNode(4 ,y);
-                paintNode(5 ,y);
-                paintNode(6 ,y);
-                }
-
-                setTimeout(function() {
+                     
                     for(var y = curGameHeight; y > 0; y--) {
-                paintNode(1 ,y);
-                paintNode(2 ,y);
-                paintNode(3 ,y);
-                paintNode(4 ,y);
-                paintNode(5 ,y);
-                paintNode(6 ,y);
+                        paintNode(1 ,y);
+                        paintNode(2 ,y);
+                        paintNode(3 ,y);
+                        paintNode(4 ,y);
+                        paintNode(5 ,y);
+                        paintNode(6 ,y);
+                    }
+
+                    // for(var y = curGameHeight; y > 0; y--) {
+                    //     paintNode(1 ,y);
+                    //     paintNode(2 ,y);
+                    //     paintNode(3 ,y);
+                    //     paintNode(4 ,y);
+                    //     paintNode(5 ,y);
+                    //     paintNode(6 ,y);
+                    // }
                 }
-            }, 1000);
-        }
                 gam = document.getElementById("game");
                 resul = document.getElementById("result");
                 game = gam.getContext("2d");
@@ -140,19 +133,26 @@
                     node.style.border = "solid red " + i + "px";
                     node.style.position = "absolute";
                     node.id = "node" + i;
-                    document.getElementById("wrapper").insertBefore(node, document.getElementById("game"));//node 떨어트릴 canvas key 개수만큼생성
+                    document.getElementById("wrapper").insertBefore(node, gam);//node 떨어트릴 canvas key 개수만큼생성
                 }
+                nodeImg = new Image();
+                nodeImg.src = "node.jpg";
+                nodeImg.height = gam.height/10;
+                nodeImg.width = gam.width/10;
+                buf = document.createElement("canvas");
+                buf.style.width = "70%";
+                buf.style.height = "inherit";
+                buf.style.position = "absolute";
+                buf.id = "bufNode";
                 for (var i = 1; i < key + 1; i++) { 
-                    var node = document.createElement("canvas");
-                    node.style.width = "70%";
-                    node.style.height = "inherit";
-                    node.style.border = "solid black " + i + "px";
-                    node.style.position = "absolute";
-                    node.style.zIndex = "-1";
-                    node.id = "bufNode" + i;
-                    document.getElementById("wrapper").insertBefore(node, document.getElementById("game"));//node 떨어트릴 canvas key 개수만큼생성
+                    buf.getContext("2d").beginPath();
+                    buf.getContext("2d").arc((curGameWidth/(key*2 - 1))*(2*i - 1), 0, 5, 0, Math.PI*2, true);
+                    buf.getContext("2d").fillStyle = "blue";
+                    buf.getContext("2d").fill();
                 }
-                
+                // nodeImg.onload = function() {
+                //     buf.getContext("2d").drawImage(nodeImg, 0, 0);
+                // }
                 resiz();
             }
         </script>
