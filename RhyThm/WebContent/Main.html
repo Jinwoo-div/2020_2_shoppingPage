@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blog Page</title>
+<style>
+html {
+    height: 100%;
+}
+body {
+    background-color: #efe5d0;
+    font-family: Arial, "Trebuchet MS", sans-serif;
+    margin: 0px;
+    height: 100%;
+}
+#wrapper {
+    width:80%;
+    position: absolute;
+    right: 0px;
+    height: 100%;
+}
+#nav {
+    background-color: #ffd800;
+    height: 100%;
+    width: 20%;
+    float: left;
+}
+#header {
+    background-color: #e3afed;
+    color: #000000;
+    height: 15%;
+}
+h1 {
+    margin: 0px;
+}
+
+section#main {
+    height: 85%;
+    background-color: yellow;
+}
+
+
+footer {
+    background-color: #954b4b;
+    color: #efe5d0;
+    padding: 10px;
+    margin: 0px 0px 0px 0px;
+    font-size: 90%;
+}
+#logo {
+    position: relative;
+    left: 10px;
+    top: 10px;
+}
+#searchbar{
+    position: inherit;
+    top: 10px;
+    width: 150px;
+}
+#search {
+    position: relative;
+    right: 100px;
+    top: 10px;
+}
+#bag {
+    position: relative;
+    right: 30px;
+    top: 10px;
+}
+#keep {
+    position: relative;
+    right: 20px;
+    top: 10px;
+}
+#user {
+    position: relative;
+    right: 10px;
+    top: 10px;
+}
+#category {
+    display: block;
+    position: fixed;
+    left: 143px;
+}
+</style>
+<body>
+    <div id="nav">
+        <p id="logo">aa</p>
+        <h1>Links</h1>
+        <ul>
+            <li><a href="http://www.w3c.org/">W3C</a></li>
+            <li><a href="http://developer.mozilla.org/">MOZILLA</a></li>
+            <li><a href="http://htmldog.com/guides/">HTML Dogs</a></li>
+        </ul>
+        <figure>
+            <img width="85" height="85"
+                src="hong.png"
+                alt="홍길동" />
+            <figcaption>홍길동</figcaption>
+        </figure>
+        <div id="category">
+            <ul>
+                <li>asdf</li>
+                <li>asdf</li>
+            </ul>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="header">
+            <div class="header">
+                <input type="text" id="searchbar"></input>
+                <input type="submit" id="search"></input>
+                <input type="button" id="bag"></input>
+                <input type="button" id="keep"></input>
+                <input type="button" id="user"></input>
+            </div>
+        </div>
+        <section id="main">
+            <article>
+                <h1>Semantic Tags</h1>
+                <p>
+                    시멘틱 요소(Semantic elements)들은 브라우저에게 요소의 의미나 목적을 명확하게 알려주는 요소이다.
+                </p>
+            </article>
+            <article>
+                <h1>div와 span</h1>
+                <p>
+                    div은 “divide“의 약자로서 페이지를 논리적인 섹션으로 분리하는데 사용되는 태그이다.
+                    span 요소는 인라인 요소로서 텍스트를 위한 컨테이너로 사용할 수 있다. 
+                </p>
+            </article>
+        </section>
+    </div>
+    <footer>Copyright (c) 2013 Hong</footer>
+</body>
+</html>
