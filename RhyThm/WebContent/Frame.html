@@ -144,40 +144,14 @@ footer {
     color:royalblue;
     text-decoration: underline;
 }
-#adWrapper {
-    border: 2px solid black;
-    overflow: hidden;
-    display: flex;
-    height: 300px;
-    width: 98%;
-}
-#adImg1 {
-    width: 100%;
-    transition: 0.5s;
-}
-#adImg2 {
-    width: 0;
-    transition: 0.5s;
-}
-#adImg3 {
-    width: 0;
-    transition: 0.5s;
-}
 </style>
 <script>
     window.onload = init;
     var cateFlag = false;
-    var adList = ["logo.jpg", "test.jpg", "logo.jpg", "test.jpg"];
-    var adPage = 0;
-    var adFlag = 1;
     function init() {
     document.getElementById("cateClick").onclick = openCate;
-    document.getElementById("adImg1").src = adList[0];
-    document.getElementById("adImg2").src = adList[1];
-    document.getElementById("adImg3").src = adList[2];
-    setInterval(function(){
-            adFloating();
-        }, 3000);
+    document.getElementById("logo").onclick = function() {
+        location.href = "Main.html";
     }
     function openCate() {
         if (cateFlag == true) {
@@ -189,59 +163,7 @@ footer {
             document.getElementById("category").style.width = "100px";
         }
     }
-    function adFloating() {
-        if (adFlag == 2) {
-            adPage++;
-            document.getElementById("adImg1").style.width = "0";
-            document.getElementById("adImg2").style.width = "100%";
-            document.getElementById("adImg3").remove();
-            var img = document.createElement("img");
-            img.style.width = "0";
-            img.style.transition = "0.5s";
-            img.id = "adImg3";
-            img.style.height = "300px";
-            document.getElementById("adWrapper").insertBefore(img, document.getElementById("adWrapper").lastChild);
-            document.getElementById("adImg3").src = setAd();
-            adFlag = 3;
-        }
-        else if (adFlag == 1) {
-            adPage++;
-            document.getElementById("adImg1").style.width = "100%";
-            document.getElementById("adImg3").style.width = "0";
-            document.getElementById("adImg2").remove();
-            var img = document.createElement("img");
-            img.style.width = "0";
-            img.style.transition = "0.5s";
-            img.id = "adImg2";
-            img.style.height = "300px";
-            document.getElementById("adWrapper").insertBefore(img, document.getElementById("adWrapper").lastChild);
-            document.getElementById("adImg2").src = setAd();
-            adFlag = 2;
-        }
-        else {
-            adPage++;
-            document.getElementById("adImg2").style.width = "0";
-            document.getElementById("adImg3").style.width = "100%";
-            document.getElementById("adImg1").remove();
-            var img = document.createElement("img");
-            img.style.width = "0";
-            img.style.transition = "0.5s";
-            img.id = "adImg1";
-            img.style.height = "300px";
-            document.getElementById("adWrapper").insertBefore(img, document.getElementById("adWrapper").lastChild);
-            document.getElementById("adImg1").src = setAd();
-            adFlag = 1;
-        }
-    }
-    function setAd() {
-        if (adPage > adList.length) {
-            return adList[adPage%(adList.length)];
-        }
-        else {
-            return adList[adPage-1];
-        }
-
-    }
+}
 </script>
 <body>
     <div id="nav">
@@ -281,11 +203,6 @@ footer {
             </div>
         </div>
         <div id="main">
-            <div id="adWrapper">
-                <img id="adImg1" src="" height="300px"></img>
-                <img id="adImg2" src="" height="300px"></img>
-                <img id="adImg3" src="" height="300px"></img>
-            </div>
         </div>
     </div>
     <!-- <footer>Copyright (c) 2013 Hong</footer> -->
