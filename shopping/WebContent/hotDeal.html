@@ -145,16 +145,49 @@ footer {
     text-decoration: underline;
 }
 #categoryTable{
-    border-top: 1.5px solid black;
+    border-bottom: 1.5px solid black;
+    min-width: 800px;
 }
 #cateTitle{
     float: left;
     width: 15%;
-    border-right: 1.5px solid black;
+    padding-top:30px;
+    padding-bottom: 30px;
+    padding-left: 70px;
+    min-width: 10px;
 }
 #cateList {
     float: right;
     width: 74.8%;
+    min-width: 600px;
+}
+#categoryTable{
+    border-top: 1px solid #C1C1C1;
+    border-bottom: 1.5px solid black;
+    height: 80px;
+}
+#categoryTable input{
+    border: 0;
+    background-color: white;
+    margin-left: 40px;
+    margin-top: 15px;
+}
+#categoryTable input:hover{
+    text-decoration: underline;
+}
+#thingsList {
+    width: 100%;
+}
+#thingsList td{
+    width: 25%;
+    text-align: center;
+}
+.makeKeep {
+    margin-right: 2px;
+    background-image: url("keep.JPG");
+    background-size: cover;
+    border: 0px;
+    width: 10px;
 }
 </style>
 <script>
@@ -218,12 +251,26 @@ footer {
             <div id="categoryTable">
                 <span id="cateTitle">카테고리</span>
                 <span id="cateList">
-                    <input type="button" id="dig"/><input type="button" id="beauty"/><input type="button" id="furn"/>
-                    <input type="button" id="fas"/><input type="button" id="book"/><input type="button" id="trip"/>
-                    <input type="button" id="cu"/><input type="button" id="thing"/><input type="button" id="pet"/>
-                    <input type="button" id="write"/><input type="button" id="hobby"/><input type="button" id="food"/>
+                    <input type="button" id="dig" value="디지털"/><input type="button" id="beauty" value="뷰티"/><input type="button" id="furn" value="가구"/>
+                    <input type="button" id="fas" value="패션"/><input type="button" id="book" value="도서"/><input type="button" id="trip" value="여행"/>
+                    <br>
+                    <input type="button" id="cu" value="e쿠폰"/><input type="button" id="thing" value="공구"/><input type="button" id="pet" value="반려"/>
+                    <input type="button" id="write" value="문구"/><input type="button" id="hobby" value="취미"/><input type="button" id="food" value="생필품"/>
                 </span>
             </div>
+            <table id="thingsList" border='1'>
+                <tr>
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span>
+                        <br><span>time</span>
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span> 
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span> 
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span> 
+                </tr>
+            </table>
         </div>
     </div>
 </body>

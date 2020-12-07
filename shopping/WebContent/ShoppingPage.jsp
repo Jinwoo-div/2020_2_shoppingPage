@@ -1,6 +1,18 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="com.test.sqlMap.SqlSessionManager"%>
+<%@page import="org.apache.ibatis.session.SqlSessionFactory"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="java.util.*"%>
+<%@page import="java.lang.*"%>
+<%@
+    SqlSessionFactory sqlSessionFactory = SqlSessionManager.getSqlSession();
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    %>
+    <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>My Blog Page</title>
 <style>
 html {
@@ -144,41 +156,71 @@ footer {
     color:royalblue;
     text-decoration: underline;
 }
-#adWrapper {
-    border: 2px solid black;
-    overflow: hidden;
-    display: flex;
-    height: 300px;
-    width: 98%;
+#categoryTable{
+    border-bottom: 1.5px solid black;
+    min-width: 800px;
 }
-#adImg1 {
+#cateTitle{
+    float: left;
+    width: 15%;
+    padding-top:30px;
+    padding-bottom: 30px;
+    padding-left: 70px;
+    min-width: 10px;
+}
+#cateList {
+    float: right;
+    width: 74.8%;
+    min-width: 600px;
+}
+#categoryTable{
+    border-top: 1px solid #C1C1C1;
+    border-bottom: 1.5px solid black;
+    height: 80px;
+}
+#categoryTable input{
+    border: 0;
+    background-color: white;
+    margin-left: 40px;
+    margin-top: 15px;
+}
+#categoryTable input:hover{
+    text-decoration: underline;
+}
+#thingsList {
     width: 100%;
-    transition: 0.5s;
 }
-#adImg2 {
-    width: 0;
-    transition: 0.5s;
+#thingsList td{
+    width: 25%;
+    text-align: center;
 }
-#adImg3 {
-    width: 0;
-    transition: 0.5s;
+.makeKeep {
+    margin-right: 2px;
+    background-image: url("keep.JPG");
+    background-size: cover;
+    border: 0px;
+    width: 10px;
+}
+.buy {
+    background-image: url("basket.JPG");
+    background-size: cover;
+    border: 0px;
+    width: 20px;
 }
 </style>
 <script>
     window.onload = init;
+    document.getElementById("nav").onload = <%
+    		List goodsList = sqlSession.selectList("Test.getProduct");
+    %>
+    var goodsList
     var cateFlag = false;
-    var adList = ["logo.jpg", "test.jpg", "logo.jpg", "test.jpg"];
-    var adPage = 0;
-    var adFlag = 1;
     function init() {
     document.getElementById("cateClick").onclick = openCate;
-    document.getElementById("adImg1").src = adList[0];
-    document.getElementById("adImg2").src = adList[1];
-    document.getElementById("adImg3").src = adList[2];
-    setInterval(function(){
-            adFloating();
-        }, 3000);
-    }
+    document.getElementById("logo").onclick = function() {
+        location.href = "Main.html";
+	}
+}
     function openCate() {
         if (cateFlag == true) {
             cateFlag = false;
@@ -188,59 +230,6 @@ footer {
             cateFlag = true;
             document.getElementById("category").style.width = "100px";
         }
-    }
-    function adFloating() {
-        if (adFlag == 2) {
-            adPage++;
-            document.getElementById("adImg1").style.width = "0";
-            document.getElementById("adImg2").style.width = "100%";
-            document.getElementById("adImg3").remove();
-            var img = document.createElement("img");
-            img.style.width = "0";
-            img.style.transition = "0.5s";
-            img.id = "adImg3";
-            img.style.height = "300px";
-            document.getElementById("adWrapper").insertBefore(img, document.getElementById("adWrapper").lastChild);
-            document.getElementById("adImg3").src = setAd();
-            adFlag = 3;
-        }
-        else if (adFlag == 1) {
-            adPage++;
-            document.getElementById("adImg1").style.width = "100%";
-            document.getElementById("adImg3").style.width = "0";
-            document.getElementById("adImg2").remove();
-            var img = document.createElement("img");
-            img.style.width = "0";
-            img.style.transition = "0.5s";
-            img.id = "adImg2";
-            img.style.height = "300px";
-            document.getElementById("adWrapper").insertBefore(img, document.getElementById("adWrapper").lastChild);
-            document.getElementById("adImg2").src = setAd();
-            adFlag = 2;
-        }
-        else {
-            adPage++;
-            document.getElementById("adImg2").style.width = "0";
-            document.getElementById("adImg3").style.width = "100%";
-            document.getElementById("adImg1").remove();
-            var img = document.createElement("img");
-            img.style.width = "0";
-            img.style.transition = "0.5s";
-            img.id = "adImg1";
-            img.style.height = "300px";
-            document.getElementById("adWrapper").insertBefore(img, document.getElementById("adWrapper").lastChild);
-            document.getElementById("adImg1").src = setAd();
-            adFlag = 1;
-        }
-    }
-    function setAd() {
-        if (adPage > adList.length) {
-            return adList[adPage%(adList.length)];
-        }
-        else {
-            return adList[adPage-1];
-        }
-
     }
 </script>
 <body>
@@ -281,13 +270,33 @@ footer {
             </div>
         </div>
         <div id="main">
-            <div id="adWrapper">
-                <img id="adImg1" src="" height="300px"></img>
-                <img id="adImg2" src="" height="300px"></img>
-                <img id="adImg3" src="" height="300px"></img>
+            <div id="categoryTable">
+                <span id="cateTitle">카테고리</span>
+                <span id="cateList">
+                    <input type="button" id="dig" value="디지털"/><input type="button" id="beauty" value="뷰티"/><input type="button" id="furn" value="가구"/>
+                    <input type="button" id="fas" value="패션"/><input type="button" id="book" value="도서"/><input type="button" id="trip" value="여행"/>
+                    <br>
+                    <input type="button" id="cu" value="e쿠폰"/><input type="button" id="thing" value="공구"/><input type="button" id="pet" value="반려"/>
+                    <input type="button" id="write" value="문구"/><input type="button" id="hobby" value="취미"/><input type="button" id="food" value="생필품"/>
+                </span>
             </div>
+            <table id="thingsList" border='1'>
+                <tr>
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span> 
+                        <input type="button" class="buy"/>
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span> 
+                        <input type="button" class="buy"/> 
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span> 
+                        <input type="button" class="buy"/> 
+                    <td><img src=""/><br><span>가격</span><br><span>설명</span>
+                        <br><input type="button" class="makeKeep"/><span> n찜ㅣn구매</span>  
+                        <input type="button" class="buy"/>
+                </tr>
+            </table>
         </div>
     </div>
-    <!-- <footer>Copyright (c) 2013 Hong</footer> -->
 </body>
 </html>
