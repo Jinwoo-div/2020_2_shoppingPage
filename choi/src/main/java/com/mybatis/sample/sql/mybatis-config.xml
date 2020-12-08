@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- DB 접속정보 및 기타 설정등을 할 수 있는 설정파일 -->
-
 <!DOCTYPE configuration
 	 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 "http://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -16,13 +13,13 @@
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://localhost:3307/userdb2" />
-                <property name="username" value="root" />
+                <property name="url" value="jdbc:mysql:///localhost:3307/userdb2?serverTimezone=UTC" />
+        		<property name="username" value="root"/>
                 <property name="password" value="1234" />
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/test/sqlMap/mapper/test.xml" />
+        <mapper resource="com/mybatis/sample/sql/SampleMapper.xml" />
     </mappers>
 </configuration>

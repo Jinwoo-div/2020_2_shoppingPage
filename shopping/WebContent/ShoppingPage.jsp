@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.test.sqlMap.SqlSessionManager"%>
 <%@page import="org.apache.ibatis.session.SqlSessionFactory"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@page import="java.util.*"%>
-<%@page import="java.lang.*"%>
-<%@
+<%
     SqlSessionFactory sqlSessionFactory = SqlSessionManager.getSqlSession();
     SqlSession sqlSession = sqlSessionFactory.openSession();
     %>
@@ -211,7 +210,12 @@ footer {
 <script>
     window.onload = init;
     document.getElementById("nav").onload = <%
-    		List goodsList = sqlSession.selectList("Test.getProduct");
+    List goodsList = sqlSession.selectList("Test.getProduct");
+    int size = goodsList.size();
+    for (int i = 0; i < size; i++) {
+    	HashMap li = (HashMap)goodsList.get(i);
+    	System.out.println(li);
+    	}
     %>
     var goodsList
     var cateFlag = false;
