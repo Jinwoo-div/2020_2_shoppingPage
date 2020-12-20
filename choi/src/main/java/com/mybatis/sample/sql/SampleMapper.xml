@@ -3,15 +3,18 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <!-- myBatis를 통해 DB를 다룰때 사용할 파일이다. 실행하고자 할 쿼리 모음 -->
-<mapper namespace="Test">
+<mapper namespace="test">
     <select id="getid" resultType="string">
-        SELECT id FROM users
+        SELECT name FROM users
  	</select>
     <select id="getContents" resultType="hashmap">
     	SELECT id FROM users
     </select>
     <select id="getProduct" resultType="hashmap">
-        SELECT * FROM products
+        SELECT * FROM product
+    </select>
+    <select id="getUserInfo" parameterType="hashmap" resultType="hashmap">
+        SELECT * FROM users WHERE id = #{id}
     </select>
     <!-- <select id="getCountP" parameterType="hashmap" resultType="int">
         SELECT

@@ -1,6 +1,7 @@
+<%@page import="com.mybatis.sample.app.SampleSessionFactory"%>
+<%@page import="org.apache.ibatis.session.SqlSessionManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- 삽입 -->
-<%@page import="com.test.sqlMap.SqlSessionManager"%>
 <%@page import="org.apache.ibatis.session.SqlSessionFactory"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@page import="java.util.*"%>
@@ -11,6 +12,11 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
+	<%
+    SqlSessionFactory sqlSessionFactory = SampleSessionFactory.getSqlSession();
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    System.out.println(sqlSession.selectList("test.getid"));
+    %>
 <%-- <%
     SqlSessionFactory sqlSessionFactory = SqlSessionManager.getSqlSession();
     SqlSession sqlSession = sqlSessionFactory.openSession();
