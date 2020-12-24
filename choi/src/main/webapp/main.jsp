@@ -242,19 +242,15 @@ footer {
         else {
             return adList[adPage-1];
         }
-
     }
 </script>
 <body>
     <div id="nav">
         <p id="logo">
             <img width="130" height="50"
-                src="logo.jpg">
-            </img>
+                src="logo.jpg"/>
         </p>
         <a id="cateClick"><b>카테고리▶</b></a><br>
-        <a><b>핫딜</b></a><br>
-        <a><b>랭킹</b></a><br>
         <a><b>about Site</b></a><br>
     </div>
     <div id="category">
@@ -290,6 +286,5 @@ footer {
             </div>
         </div>
     </div>
-    <!-- <footer>Copyright (c) 2013 Hong</footer> -->
 </body>
 </html>

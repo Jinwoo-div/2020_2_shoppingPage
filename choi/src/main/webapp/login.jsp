@@ -105,17 +105,18 @@
 	   outer.println("alert('id나 패스워드 확인 요망');");
 	   outer.println("</script>");
    }
-   List goodsList = sqlSession.selectList("test.getProduct");
-   int size = goodsList.size();
-   for (int i = 0; i < size; i++) {
-   	HashMap li = (HashMap)goodsList.get(i);
-		String tmp = (String)li.get("category");
+   else if (err.equals("com")) {
+	   PrintWriter outer = response.getWriter();
+	   response.setContentType("text/html; charset=utf=8");
+	   outer.println("<script>");
+	   outer.println("alert('가입완료! 로그인 요망');");
+	   outer.println("</script>");
    }
 		%>
 	window.onload = init;
 	function init() {
 		document.getElementById("join").onclick = function() {
-        location.href = "join.html";
+        location.href = "join.jsp";
 		}
 	}
    </script>
@@ -123,7 +124,7 @@
     <body>
         <div id="wrapper">
         <div id="header"><span id="title"><span id="t">로그인</span></span></div>
-        <form method="post" action="main.jsp">
+        <form method="post" action="logincheck.jsp">
         <div id="main"><span id="idAlign"><span id="id">ID</span>
         <input type="text" name="id"></input></span>
             <br><span id="pwAlign"><span id="pw">PW</span><input type="password" name="pw"></input></span>

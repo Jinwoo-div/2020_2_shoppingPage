@@ -16,6 +16,27 @@
     <select id="getUserInfo" parameterType="hashmap" resultType="hashmap">
         SELECT * FROM users WHERE id = #{id}
     </select>
+    <select id="getSearch" parameterType="hashmap" resultType="hashmap">
+        SELECT * FROM product WHERE discription LIKE concat('%',#{name},'%') 
+    </select>
+    <select id="getSameDis" resultType="hashmap">
+        SELECT * FROM product WHERE discription LIKE concat(#{name}) 
+    </select>
+    <insert id="joinUser" parameterType="hashmap">
+        INSERT INTO users(id, password, name) VALUES (#{id}, #{pw}, #{name})
+    </insert>
+    <insert id="addItem" parameterType="hashmap">
+        INSERT INTO product(category, img, price, discription) 
+        VALUES (#{category}, #{img}, #{price}, #{discription})
+    </insert>
+    <update id="ALTproduct" parameterType="hashmap">
+    	UPDATE product 
+    	SET category = #{category}, img = #{img}, price = #{price}, discription = #{discription}
+    	WHERE discription = #{prevDis}
+    </update>
+    <delete id="delProduct" parameterType="hashmap">
+    	DELETE FROM product WHERE discription = #{discription}
+    </delete>
     <!-- <select id="getCountP" parameterType="hashmap" resultType="int">
         SELECT
             count(*)

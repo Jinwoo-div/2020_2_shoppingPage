@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@page import="com.mybatis.sample.app.SampleSessionFactory"%>
@@ -188,6 +189,10 @@ footer {
 #categoryTable input:hover{
     text-decoration: underline;
 }
+#categoryTable a{
+	margin: 20px;
+	font-color: black;
+}
 #thingsTable {
     width: 100%;
 }
@@ -227,92 +232,133 @@ footer {
 	    var cate = cat;
 	    <%
 	    request.setCharacterEncoding("UTF-8");
-	    String cat = request.getParameter("name");
-	    List goodsList = sqlSession.selectList("test.getProduct");
-	    int size = goodsList.size();
-	    for (int i = 0; i < size; i++) {
-	    	HashMap li = (HashMap)goodsList.get(i);
-    		String tmp = (String)li.get("category");
-    		if (tmp.equals(cat)) {
-    		}
-    		else {
-    			continue;
-    		}
-    		%>
-	    	categoryList.push('<%=tmp%>');
-    	    <%
-    		tmp = (String)li.get("discription");
-    		%>
-    	    discriptionList.push('<%=tmp%>');
-    	    <%
-    		tmp = (String)li.get("price");
-    		%>
-	    	priceList.push('<%=tmp%>');
-    	    <%
-    		tmp = (String)li.get("img");
-    		%>
-    		imgList.push('<%=tmp%>');
-    	    <%
-    		tmp = (String)li.get("keepNum");
-    		%>
-	    	keepList.push('<%=tmp%>');
-    	    <%
-    		tmp = (String)li.get("buyNum");
-    		%>
-	    	buyList.push('<%=tmp%>');	    	   
-	    	<%
-	    	}
-	    %>/* 
-	    var le = buyList.length;
-	    var unmatch = new Array();
-	    for (var i = 0; i < le; i++) {
-	    	if (categoryList[i] == cate) {
-	    		continue;
-	    	}
-	    	else {
-	    		unmatch.push(i);
-	    	}
+	    String cata = request.getParameter("name");
+	    if (cata == null) {
+	    	System.out.println("");
 	    }
-	    for (var i = unmatch.length-1; i > -1; i--) {
-		    discriptionList.splice(unmatch[i], 1);
-		    priceList.splice(unmatch[i], 1);
-		    imgList.splice(unmatch[i], 1);
-		    keepList.splice(unmatch[i], 1);
-		    buyList.splice(unmatch[i], 1);
-		    categoryList.splice(unmatch[i], 1);
-	    } */
-	    for (var i = 1; i < buyList.length+1; i++) {
-	        if (i%4 == 1) {
-		        var newtr = document.createElement("tr");
-		        newtr.id = "line" + (parseInt(i/4)+1);
-		        document.getElementById("thingsList").appendChild(newtr);
-	        }
-	        var linenum;
-	        if (i/4 == 1) {
-	        	linenum = parseInt(i/4);
-	        }
-	        else {
-	        	linenum = parseInt(i/4)+1;
-	        }
-	        var name = "line" + (linenum);
-	       	document.getElementById(name).insertCell()
-	        var arr = document.getElementById(name).getElementsByTagName("td");
-	       	var index = i%4;
-	       	if (index == 0) {
-	       		index = 3;
-	       	}
-	       	else {
-	       		index -= 1;
-	       	}
-		    var discripition = discriptionList[i-1]
-		    var price = priceList[i-1];
-		    var img = imgList[i-1];
-		    var keep = keepList[i-1];
-		    var buy = buyList[i-1];
-		    var category = categoryList[i-1];
-	        arr[index].innerHTML = "<img src=''/><br><span>"+price+"원</span><br><span>"+discripition+"</span><br><input type='button' class='makeKeep'/><span> " + keep+"찜ㅣ "+buy+"구매</span> <input type='button' class='buy'/>";
+	    else if (cata.equals("dig") || cata.equals("book") || cata.equals("pet")  ||
+	    		cata.equals("beauty") || cata.equals("trip") || cata.equals("write") ||
+	    				cata.equals("furn") || cata.equals("cu") || cata.equals("hobby") ||
+	    						cata.equals("fash") || cata.equals("thing") || cata.equals("food")) {
+		   	
+		    List goodsList = sqlSession.selectList("test.getProduct");
+		    int size = goodsList.size();
+		    for (int i = 0; i < size; i++) {
+		    	HashMap li = (HashMap)goodsList.get(i);
+	    		String tmp = (String)li.get("category");
+	    		if (tmp.equals(cata)) {
+	    		}
+	    		else {
+	    			continue;
+	    		}
+	    		%>
+		    	categoryList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("discription");
+	    		%>
+	    	    discriptionList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("price");
+	    		%>
+		    	priceList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("img");
+	    		%>
+	    		imgList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("keepNum");
+	    		%>
+		    	keepList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("buyNum");
+	    		%>
+		    	buyList.push('<%=tmp%>');	    	   
+		    	<%
+		    	}
 	    }
-
+	    else { 
+	    	cata = URLDecoder.decode(cata, "euc-kr");
+	    	List goodsList = sqlSession.selectList("test.getSearch", cata);
+		    int size = goodsList.size();
+		    for (int i = 0; i < size; i++) {
+		    	HashMap li = (HashMap)goodsList.get(i);
+	    		String tmp = (String)li.get("category");
+	    		%>
+		    	categoryList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("discription");
+	    		%>
+	    	    discriptionList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("price");
+	    		%>
+		    	priceList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("img");
+	    		%>
+	    		imgList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("keepNum");
+	    		%>
+		    	keepList.push('<%=tmp%>');
+	    	    <%
+	    		tmp = (String)li.get("buyNum");
+	    		%>
+		    	buyList.push('<%=tmp%>');	    	   
+		    	<%
+		    	}
+	    }
+		    %>/* 
+		    var le = buyList.length;
+		    var unmatch = new Array();
+		    for (var i = 0; i < le; i++) {
+		    	if (categoryList[i] == cate) {
+		    		continue;
+		    	}
+		    	else {
+		    		unmatch.push(i);
+		    	}
+		    }
+		    for (var i = unmatch.length-1; i > -1; i--) {
+			    discriptionList.splice(unmatch[i], 1);
+			    priceList.splice(unmatch[i], 1);
+			    imgList.splice(unmatch[i], 1);
+			    keepList.splice(unmatch[i], 1);
+			    buyList.splice(unmatch[i], 1);
+			    categoryList.splice(unmatch[i], 1);
+		    } */
+		    for (var i = 1; i < buyList.length+1; i++) {
+		        if (i%4 == 1) {
+			        var newtr = document.createElement("tr");
+			        newtr.id = "line" + (parseInt(i/4)+1);
+			        document.getElementById("thingsList").appendChild(newtr);
+		        }
+		        var linenum;
+		        if (i/4 == 1) {
+		        	linenum = parseInt(i/4);
+		        }
+		        else {
+		        	linenum = parseInt(i/4)+1;
+		        }
+		        var name = "line" + (linenum);
+		       	document.getElementById(name).insertCell()
+		        var arr = document.getElementById(name).getElementsByTagName("td");
+		       	var index = i%4;
+		       	if (index == 0) {
+		       		index = 3;
+		       	}
+		       	else {
+		       		index -= 1;
+		       	}
+			    var discripition = discriptionList[i-1]
+			    var price = priceList[i-1];
+			    var img = imgList[i-1];
+			    var keep = keepList[i-1];
+			    var buy = buyList[i-1];
+			    var category = categoryList[i-1];
+		        arr[index].innerHTML = "<img src=''/><br><span>"+price+"원</span><br><span>"+discripition+"</span><br><input type='button' class='makeKeep'/><span> " + keep+"찜ㅣ "+buy+"구매</span> <input type='button' class='buy'/>";
+   
+		    }
     }
     var cateFlag = false;
     function init() {
@@ -329,9 +375,13 @@ footer {
     document.getElementById("hobby").onclick = loadThings("hobby");
     document.getElementById("food").onclick = loadThings("food");
     document.getElementById("logo").onclick = function() {
-        location.href = "Main.html";
+        location.href = "main.jsp";
 		}
-	}
+    document.getElementById("search").onclick = function() {
+    	var name = document.getElementById("searchbar").value;
+    	location.href = "ShoppingPage.jsp?name=" + encodeURIComponent(name);
+		}
+    }
     function openCate() {
         if (cateFlag == true) {
             cateFlag = false;
@@ -351,30 +401,28 @@ footer {
             </img>
         </p>
         <a id="cateClick"><b>카테고리▶</b></a><br>
-        <a><b>핫딜</b></a><br>
-        <a><b>랭킹</b></a><br>
         <a><b>about Site</b></a><br>
     </div>
     <div id="category">
         <a href="ShoppingPage.jsp?name=dig">디지털</a>
-        <a href="ShoppingPage.jsp?name='beauty'">뷰티</a>
-        <a href="ShoppingPage.jsp?name='furn'">가구</a>
-        <a href="ShoppingPage.jsp?name='fash'">패션</a>
-        <a href="ShoppingPage.jsp?name='book'">도서</a>
-        <a href="ShoppingPage.jsp?name='trip'">여행</a>
-        <a href="ShoppingPage.jsp?name='cu'">e쿠폰</a>
-        <a href="ShoppingPage.jsp?name='thing'">공구</a>
-        <a href="ShoppingPage.jsp?name='pet'">반려</a>
-        <a href="ShoppingPage.jsp?name='write'">문구</a>
-        <a href="ShoppingPage.jsp?name='hobby'">취미</a>
-        <a href="ShoppingPage.jsp?name='food'">생필품</a>
+        <a href="ShoppingPage.jsp?name=beauty">뷰티</a>
+        <a href="ShoppingPage.jsp?name=furn">가구</a>
+        <a href="ShoppingPage.jsp?name=fash">패션</a>
+        <a href="ShoppingPage.jsp?name=book">도서</a>
+        <a href="ShoppingPage.jsp?name=trip">여행</a>
+        <a href="ShoppingPage.jsp?name=cu">e쿠폰</a>
+        <a href="ShoppingPage.jsp?name=thing">공구</a>
+        <a href="ShoppingPage.jsp?name=pet">반려</a>
+        <a href="ShoppingPage.jsp?name=write">문구</a>
+        <a href="ShoppingPage.jsp?name=hobby">취미</a>
+        <a href="ShoppingPage.jsp?name=food">생필품</a>
         <a href=""></a>
     </div>
     <div id="wrapper">
         <div id="header">
             <div class="header">
                 <input type="text" id="searchbar"></input>
-                <input type="submit" id="search" value=""></input>
+                <input type="button" id="search" value=""></input>
                 <input type="button" id="bag"></input>
                 <input type="button" id="keep"></input>
                 <input type="button" id="user"></input>
@@ -385,11 +433,11 @@ footer {
                 <span id="cateTitle">카테고리</span>
                 <span id="cateList">
                     
-        			<a href="ShoppingPage.jsp?name=dig" id="dig">디지털</a><a href="ShoppingPage.jsp?name='beauty'" id="beauty">뷰티</a><a href="ShoppingPage.jsp?name='furn'" id="furn">가구</a>
-                    <a href="ShoppingPage.jsp?name='fash'" id="fash">패션</a><a href="ShoppingPage.jsp?name='book'" id="book">도서</a><a href="ShoppingPage.jsp?name='trip'" id="trip">여행</a>
+        			<a href="ShoppingPage.jsp?name=dig" id="dig">디지털</a><a href="ShoppingPage.jsp?name=beauty" id="beauty">뷰티</a><a href="ShoppingPage.jsp?name=furn" id="furn">가구</a>
+                    <a href="ShoppingPage.jsp?name=fash" id="fash">패션</a><a href="ShoppingPage.jsp?name=book" id="book">도서</a><a href="ShoppingPage.jsp?name=trip" id="trip">여행</a>
                     <br>
-                    <a href="ShoppingPage.jsp?name='cu'" id="cu">e쿠폰</a><a href="ShoppingPage.jsp?name='thing'" id="thing">공구<a href="ShoppingPage.jsp?name='pet'" id="pet">반려</a>
-                    <a href="ShoppingPage.jsp?name='write'" id="write">문구</a><a href="ShoppingPage.jsp?name='hobby'" id="hobby">취미</a><a href="ShoppingPage.jsp?name='food'" id="food">생필품</a>
+                    <a href="ShoppingPage.jsp?name=cu" id="cu">e쿠폰</a><a href="ShoppingPage.jsp?name=thing" id="thing">공구<a href="ShoppingPage.jsp?name=pet" id="pet">반려</a>
+                    <a href="ShoppingPage.jsp?name=write" id="write">문구</a><a href="ShoppingPage.jsp?name=hobby" id="hobby">취미</a><a href="ShoppingPage.jsp?name=food" id="food">생필품</a>
                 </span>
             </div>
             <table id="thingsTable">
